@@ -1,0 +1,10 @@
+services:
+  react-app:
+    image: node:latest   # usa la última versión estable de Node.js
+    container_name: API_ESP32
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app   # monta tu proyecto local dentro del contenedor
+    ports:
+      - "3000:3000"      # expone el puerto para desarrollo (npm start)
+    command: sh -c "npm install -g create-vite && create-vite . --template react && npm install && npm run dev; tail -f /dev/null"

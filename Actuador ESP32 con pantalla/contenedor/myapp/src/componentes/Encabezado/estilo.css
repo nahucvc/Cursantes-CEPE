@@ -1,0 +1,127 @@
+.contenedor {
+    position: absolute;
+    top: 0px;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background-color: #d0d1d3;
+    align-items: center;
+
+
+}
+
+
+.Encabezado {
+    background: linear-gradient(0deg, #dadbda 0%, #c8c8c8db 100%);
+    color: #222;
+    position: relative;
+    font-size: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    height: fit-content;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-shadow: 4px 4px 2px #5553535b;
+    min-width: 400px;
+}
+
+#subEncabezado {
+    background: linear-gradient(0deg, #039c4a 0%, #07c36edb 100%);
+    color: #222;
+    position: relative;
+    font-size: 0.5rem;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 400px;
+}
+
+
+
+.pesta {
+    background: linear-gradient(0deg, #f7f7f7 0%, #e7e7e7 100%);
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    flex-wrap: wrap;
+    min-width: 600px;;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 20px;
+    /* opcional */
+
+
+}
+
+.pesta p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.8rem;
+    text-shadow: 2px 2px 2px #55535345;
+    font-weight: bold;
+    
+}
+
+.pesta-individual {
+    background: linear-gradient(0deg, #f7f7f7 0%, #e0e0e0 100%);
+    display: flex;
+    flex: 1 1 50%;
+    min-width: 300px;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+.pesta-individual:hover {
+    background: linear-gradient(0deg, #f7f7f7 0%, #999797 100%);
+}
+
+.cuerpo {
+    position: relative;
+    display: flex;
+    
+    height: fit-content;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-radius: 25px;
+    
+
+}
+
+#PesWIFI {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100%; /* O un alto fijo si querés distribución exacta */
+    justify-content: space-evenly; /* distribuye espacio vertical igual */
+    align-items: center;
+    border-radius: 10px;
+    min-width: 400px;
+    background: #d5d2d2;
+    padding: 40px;
+}
+
+
+
+.contendorBotones
+{
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+.margen-20px
+{
+    margin: 20px 20px 20px 20px;
+}

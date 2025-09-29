@@ -1,0 +1,30 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /config:/config
+    
+      
+    restart: unless-stopped
+    privileged: true
+    ports:
+    - "8123:8123"
+    networks:
+      - mqtt
+  
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"   # Puerto MQTT
+      - "9001:9001"   # Puerto WebSocket (opcional)
+    volumes:
+      - ./mosquitto:/mosquitto
+    networks:
+      - mqtt
+
+networks:
+      mqtt:
+        name: MQTT

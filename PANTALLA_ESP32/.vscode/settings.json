@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "wifi.h": "c",
+        "istream": "cpp",
+        "ostream": "cpp"
+    }
+}

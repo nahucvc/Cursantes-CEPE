@@ -1,0 +1,10 @@
+services:
+  app:
+    image: node:22
+    container_name: GUI_ESP32
+    working_dir: /usr/src/app
+    volumes:
+     - ./app:/usr/src/app
+    ports:
+     - "4500:4500"
+    command: tail -f /dev/null 
