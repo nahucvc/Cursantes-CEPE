@@ -2,8 +2,12 @@
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <PubSubClient.h>
+#include <LD2420.h>
+#include <stdio.h>
 
+LD2420 radar;
 
+char buffer[12];
 
 // ====== CONFIG WIFI ======
 const char* WIFI_SSID = "Ogas";
@@ -14,14 +18,14 @@ const char* MQTT_HOST = "prueba-ogas.sytes.net"; // o IP del broker
 const uint16_t MQTT_PORT = 7070;                 // SIN TLS
 const char* MQTT_USER = "Marcelo";               // opcional
 const char* MQTT_PASS = "Vema.0405";                 // opcional
-const char* MQTT_CLIENT_ID = "ESP32-CarrascoRojas";
+const char* MQTT_CLIENT_ID = "ESP32-Cliente-1";
 
 // Topics
-const char* TOPIC_LWT       = "pruebas/equipo2/status";
-const char* TOPIC_PUB       = "pruebas/equipo2/salida";
-const char* TOPIC_SUB_1     = "pruebas/equipo2/in";
-const char* TOPIC_SUB_2     = "pruebas/equipo2/comandos";
-const char* TOPIC_SUB_WILDC = "pruebas/equipo2/#"; // comodín (opcional)
+const char* TOPIC_LWT       = "CEPE/Equipo0/status";
+const char* TOPIC_PUB       = "CEPE/Equipo0/out";
+const char* TOPIC_SUB_1     = "CEPE/Equipo0/in";
+const char* TOPIC_SUB_2     = "CEPE/Equipo0/comandos";
+const char* TOPIC_SUB_WILDC = "CEPE/Equipo0/#"; // comodín (opcional)
 
 // Mensajes LWT
 const char* LWT_MSG_OFF = "offline";
@@ -58,9 +62,9 @@ void onMqttMessage(char* topic, byte* payload, unsigned int length) {
   Serial.println();
 
   // Ejemplo: discriminar por tópico
-  if (strcmp(topic,TOPIC_SUB_1) == 0) {
-    int valor= payload[0];
-    if (valor==49)
+  if (strcmp(topic, TOPIC_SUB_1) == 0) {
+    int value = payload[0];
+    if (value==49)
     {
       digitalWrite(15,HIGH);
     }else
@@ -91,9 +95,10 @@ void ensureMqtt() {
       Serial.println("[MQTT] Conectado ✔");
       mqtt.publish(TOPIC_LWT, LWT_MSG_ON, true); // avisar online
 
-     
+      // Varias suscripciones
       mqtt.subscribe(TOPIC_SUB_1, 1);     // QoS 1
-     
+      mqtt.subscribe(TOPIC_SUB_2, 0);     // QoS 0
+      // mqtt.subscribe(TOPIC_SUB_WILDC); // comodín (opcional)
     } else {
       Serial.printf("[MQTT] Falló (rc=%d). Reintento en 3s...\n", mqtt.state());
       delay(3000);
@@ -101,8 +106,12 @@ void ensureMqtt() {
   }
 }
 
+void llamada(int distance);
+
+
 void setup() {
   pinMode(15,OUTPUT);
+  Serial1.begin(115200,SERIAL_8N1, 37, 38);
   Serial.begin(115200);
   delay(100);
   connectWiFi();
@@ -111,6 +120,15 @@ void setup() {
   mqtt.setBufferSize(1024);
   mqtt.setCallback(onMqttMessage);
 
+  ensureMqtt();
+  if (radar.begin(Serial1)) {
+    Serial.println("Radar initialized!");
+    radar.setUpdateInterval(100);
+    radar.onDetection(llamada);
+  }else
+  {
+    Serial.println("Radar not detected!");
+  }
 
 }
 
@@ -120,8 +138,18 @@ void loop() {
 
   // Publicación periódica cada 5 s
   static uint32_t t0 = 0;
-  if (millis() - t0 > 5000) {
+  if (millis() - t0 > 500) {
     t0 = millis();
-    mqtt.publish(TOPIC_PUB,"Prueba de mensaje desde ESP32...");
+    radar.update();
+    mqtt.publish(TOPIC_PUB, buffer);
   }
+}
+
+
+
+void llamada(int distance)
+{
+
+  sprintf(buffer,"%d",distance );
+ // Serial.printf("Distancia:%s\n",buffer);
 }
