@@ -1,0 +1,23 @@
+[ req ]
+default_bits       = 2048
+prompt             = no
+default_md         = sha256
+req_extensions     = req_ext
+distinguished_name = dn
+
+[ dn ]
+C  = AR
+ST = Buenos Aires
+O  = TuOrg
+OU = DTI
+CN = prueba-ogas.sytes.net      # el CN está bien, pero lo que vale es SAN
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = prueba-ogas.sytes.net
+DNS.2 = localhost
+# (Opcional) agregá IPs reales si vas a conectar por IP:
+# IP.1  = 181.228.64.37
+# IP.2  = 192.168.137.245

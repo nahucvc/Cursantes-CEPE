@@ -18,8 +18,10 @@ services:
     container_name: mosquitto
     restart: unless-stopped
     ports:
-      - "1883:1883"   # Puerto MQTT
-      - "9001:9001"   # Puerto WebSocket (opcional)
+      - "8883:8883"   # Puerto MQTT
+      - "7070:7070"   # Puerto MQTT (sin SSL)
+      
+      
     volumes:
       - ./mosquitto:/mosquitto
     networks:
