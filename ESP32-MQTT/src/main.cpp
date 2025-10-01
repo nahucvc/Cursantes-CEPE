@@ -4,19 +4,19 @@
 #include <PubSubClient.h>
 
 // ====== CONFIG WIFI ======
-const char* WIFI_SSID = "DESKTOP-PP5LO6R 1839";
-const char* WIFI_PASS = "|36i07L8";
+const char* WIFI_SSID = "CEPEMANCAP";
+const char* WIFI_PASS = "Lamismaquetenia";
 
 // ====== CONFIG MQTT (SIN TLS) ======
-const char* MQTT_HOST = "prueba-ogas.sytes.net"; // o IP del broker
-const uint16_t MQTT_PORT = 7070;                 // SIN TLS
-const char* MQTT_USER = "Marcelo";               // opcional
-const char* MQTT_PASS = "Vema.0405";                 // opcional
-const char* MQTT_CLIENT_ID = "ESP32-Cliente-1";
+const char* MQTT_HOST = "192.168.0.103"; // o IP del broker
+const uint16_t MQTT_PORT = 1883;                 // SIN TLS
+const char* MQTT_USER = "Frias";               // opcional
+const char* MQTT_PASS = "12345678";                 // opcional
+const char* MQTT_CLIENT_ID = "ESP3201";
 
 // Topics
 const char* TOPIC_LWT       = "pruebas/esp32/status";
-const char* TOPIC_PUB       = "pruebas/esp32/out";
+const char* TOPIC_PUB       = "pruebas/esp32/salida";
 const char* TOPIC_SUB_1     = "pruebas/esp32/in";
 const char* TOPIC_SUB_2     = "pruebas/esp32/comandos";
 const char* TOPIC_SUB_WILDC = "pruebas/esp32/#"; // comodín (opcional)
@@ -56,8 +56,17 @@ void onMqttMessage(char* topic, byte* payload, unsigned int length) {
   Serial.println();
 
   // Ejemplo: discriminar por tópico
-  if (strcmp(topic, TOPIC_SUB_1) == 0) {
-    // hacer algo con TOPIC_SUB_1
+  if (strcmp(topic,TOPIC_SUB_1) == 0) {
+    int valor= payload[0];
+    if (valor==49)
+    {
+      digitalWrite(15,HIGH);
+    }else
+    {
+      digitalWrite(15,LOW);
+    }
+    
+
   } else if (strcmp(topic, TOPIC_SUB_2) == 0) {
     // hacer algo con TOPIC_SUB_2
   }
@@ -80,10 +89,9 @@ void ensureMqtt() {
       Serial.println("[MQTT] Conectado ✔");
       mqtt.publish(TOPIC_LWT, LWT_MSG_ON, true); // avisar online
 
-      // Varias suscripciones
+     
       mqtt.subscribe(TOPIC_SUB_1, 1);     // QoS 1
-      mqtt.subscribe(TOPIC_SUB_2, 0);     // QoS 0
-      // mqtt.subscribe(TOPIC_SUB_WILDC); // comodín (opcional)
+     
     } else {
       Serial.printf("[MQTT] Falló (rc=%d). Reintento en 3s...\n", mqtt.state());
       delay(3000);
@@ -92,6 +100,7 @@ void ensureMqtt() {
 }
 
 void setup() {
+  pinMode(15,OUTPUT);
   Serial.begin(115200);
   delay(100);
   connectWiFi();
@@ -100,7 +109,7 @@ void setup() {
   mqtt.setBufferSize(1024);
   mqtt.setCallback(onMqttMessage);
 
-  ensureMqtt();
+
 }
 
 void loop() {
@@ -111,6 +120,6 @@ void loop() {
   static uint32_t t0 = 0;
   if (millis() - t0 > 5000) {
     t0 = millis();
-    mqtt.publish(TOPIC_PUB, "Hola desde ESP32 por MQTT sin TLS");
+    mqtt.publish(TOPIC_PUB,"759");
   }
 }
