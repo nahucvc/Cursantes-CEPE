@@ -10,11 +10,11 @@ const char* WIFI_SSID = "CEPEMANCAP";
 const char* WIFI_PASS = "Lamismaquetenia";
 
 // ====== CONFIG MQTT (SIN TLS) ======
-const char* MQTT_HOST = "192.168.0.103"; // o IP del broker
-const uint16_t MQTT_PORT = 1883;                 // SIN TLS
-const char* MQTT_USER = "Frias";               // opcional
-const char* MQTT_PASS = "12345678";                 // opcional
-const char* MQTT_CLIENT_ID = "ESP3201";
+const char* MQTT_HOST = "prueba-ogas.sytes.net"; // o IP del broker
+const uint16_t MQTT_PORT = 7070;                 // SIN TLS
+const char* MQTT_USER = "Marcelo";               // opcional
+const char* MQTT_PASS = "Vema.0405";                 // opcional
+const char* MQTT_CLIENT_ID = "ESP32-Cliente-1";
 
 // Topics
 const char* TOPIC_LWT       = "pruebas/esp32/status";
