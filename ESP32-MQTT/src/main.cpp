@@ -6,22 +6,22 @@
 
 
 // ====== CONFIG WIFI ======
-const char* WIFI_SSID = "CEPEMANCAP";
-const char* WIFI_PASS = "Lamismaquetenia";
+const char* WIFI_SSID = "Ogas";
+const char* WIFI_PASS = "Vero.0405";
 
 // ====== CONFIG MQTT (SIN TLS) ======
 const char* MQTT_HOST = "prueba-ogas.sytes.net"; // o IP del broker
 const uint16_t MQTT_PORT = 7070;                 // SIN TLS
 const char* MQTT_USER = "Marcelo";               // opcional
 const char* MQTT_PASS = "Vema.0405";                 // opcional
-const char* MQTT_CLIENT_ID = "ESP32-Cliente-1";
+const char* MQTT_CLIENT_ID = "ESP32-CarrascoRojas";
 
 // Topics
-const char* TOPIC_LWT       = "pruebas/esp32/status";
-const char* TOPIC_PUB       = "pruebas/esp32/salida";
-const char* TOPIC_SUB_1     = "pruebas/esp32/in";
-const char* TOPIC_SUB_2     = "pruebas/esp32/comandos";
-const char* TOPIC_SUB_WILDC = "pruebas/esp32/#"; // comodín (opcional)
+const char* TOPIC_LWT       = "pruebas/equipo2/status";
+const char* TOPIC_PUB       = "pruebas/equipo2/salida";
+const char* TOPIC_SUB_1     = "pruebas/equipo2/in";
+const char* TOPIC_SUB_2     = "pruebas/equipo2/comandos";
+const char* TOPIC_SUB_WILDC = "pruebas/equipo2/#"; // comodín (opcional)
 
 // Mensajes LWT
 const char* LWT_MSG_OFF = "offline";
@@ -122,6 +122,6 @@ void loop() {
   static uint32_t t0 = 0;
   if (millis() - t0 > 5000) {
     t0 = millis();
-    mqtt.publish(TOPIC_PUB,"759");
+    mqtt.publish(TOPIC_PUB,"Prueba de mensaje desde ESP32...");
   }
 }
